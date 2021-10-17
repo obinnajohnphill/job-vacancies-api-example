@@ -1,9 +1,13 @@
 # job-vacancies-api-example
 
-## Backend Project Setup
+## Project Setup
 ```
 * clone project repositroy
-* cd into root directory
+```
+
+### Backend  Setup
+```
+* cd into backend directory
 * RUN: docker-compose build
 * RUN: docker-compose up
 * RUN: php artisan migrate
@@ -25,24 +29,24 @@ Endpoint: http://localhost:8082/api
 ```
 
 
-## Frontend Project setup
+### Frontend Project setup
 ```
-npm install
+* cd into frontend directory
+* RUN: npm install
 ```
 
 ### Compiles Frontend and hot-reloads for development
 ```
-npm run serve
+* RUN: npm run serve
+* Navigate to url: http://localhost:8081/
 ```
 
 ### Compiles Frontend and minifies for production
 ```
-npm run build
+* RUN: npm run build
+* Copy files from dist directory onto your production server 
+
 ```
 
-### Frontend lints and fixes files
-```
-npm run lint
-```
 
 
