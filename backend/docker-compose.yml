@@ -1,0 +1,60 @@
+version: '3.5'
+services:
+
+  # The Application
+  vacancies-app:
+    container_name: vacancies-app
+    image:  vacancies-app
+    networks:
+      -  vacancies-app
+    build:
+      context: ./
+      dockerfile: docker/application/Dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    ports:
+      - 9004:9000
+    depends_on:
+      -  vacancies-db
+
+
+  # The Web Server
+  vacancies-web:
+    container_name:  vacancies-web
+    image:  vacancies-web
+    networks:
+      -  vacancies-app
+    build:
+      context: ./
+      dockerfile: docker/web/Dockerfile
+    working_dir: /var/www
+    depends_on:
+      -  vacancies-app
+    volumes:
+      - ./public:/var/www/public
+    ports:
+      - 8082:80
+
+  # The Database
+  vacancies-db:
+    container_name: vacancies-db
+    networks:
+      -  vacancies-app
+    image: mysql:5.7
+    volumes:
+      -  vacancies-db:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=secret"
+      - "MYSQL_USER=homestead"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_DATABASE=homestead"
+    ports:
+      - 3306:3306
+
+volumes:
+  vacancies-db:
+
+networks:
+  vacancies-app:
+    name:  vacancies-app

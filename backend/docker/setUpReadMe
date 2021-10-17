@@ -1,0 +1,11 @@
+From application root run...
+
+docker-compose build // Download all Image files
+docker-compose up // Start running containers
+docker-compose exec dockerised-app php artisan migrate // Migrate DB to latest version
+docker-compose exec dockerised-app php artisan db:seed // Seed DB with required values
+
+If you need to SSH into App Container
+* docker container ls
+* docker exec -it <CONTAINER_ID> /bin/bash
+
