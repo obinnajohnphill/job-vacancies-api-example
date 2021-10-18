@@ -48,5 +48,10 @@ Endpoint: http://localhost:8082/api
 
 ```
 
+### Frontend Screenshot
+
+![alt text](screenshot.png)
+
+
 
 
