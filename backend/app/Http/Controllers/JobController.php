@@ -82,11 +82,11 @@ class JobController extends Controller
         return $response;
     }
 
-    public function searchVacancy(Request $request)
+    public function filterVacancy(Request $request)
     {
-        return Job::where('title','like','%'.$request->input('title').'%')
-                   ->where('location','like','%'.$request->input('location').'%')
-                   ->where('salary','like','%'.$request->input('salary').'%')
+        return Job::where('title','like','%'.$request->input('keyword').'%')
+                   ->orWhere('location','like','%'.$request->input('keyword').'%')
+                   ->orWhere('salary','like','%'.$request->input('keyword').'%')
                    ->orderBy('id', 'desc')
                    ->paginate(10);
     }

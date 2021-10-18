@@ -19,5 +19,5 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post( '/add_vacancy', 'App\Http\Controllers\JobController@addVacancy')->name('add-job');
     Route::post( '/update_vacancy', 'App\Http\Controllers\JobController@updateVacancy')->name('update-job');
     Route::post( '/delete_vacancy', 'App\Http\Controllers\JobController@deleteVacancy')->name('list-job');
-    Route::get( '/search_vacancy', 'App\Http\Controllers\JobController@searchVacancy')->name('search-job');
+    Route::get( '/filter_vacancy', 'App\Http\Controllers\JobController@filterVacancy')->name('search-job');
 });

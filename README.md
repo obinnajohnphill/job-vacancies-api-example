@@ -24,7 +24,7 @@ Endpoint: http://localhost:8082/api
 * Add Vacancies: http://localhost:8082/api/add_vacancy?title=New Job&description=New Description&location=test location&salary=100000.00 (Method Post)
 * Update Vacancies: http://localhost:8082/api/update_vacancy?id=31&title=Test Job&description=New Description&location=text 2&salary=20000.00 (Method POST)
 * Delete Vacancies: http://localhost:8082/api/delete_vacancy?id=31 (Method POST)
-* Search Vacancies: http://localhost:8082/api/search_vacancy?location=Rosebury (Method Post)
+* Filter Vacancies: http://localhost:8082/api/filter_vacancy?keyword=Rosebury (Method Post)
 
 ```
 

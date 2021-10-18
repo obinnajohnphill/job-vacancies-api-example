@@ -4,8 +4,8 @@
       <div class="left">
         <div style="margin-right: 20px">
           <p style="text-align: left; margin-left: 30%; font-weight: bolder">Filter Vacancies</p>
-        <input type="text" class="search" @click="filter()" placeholder="Job Title, Keyword.." title="Type in a category">
-        <button type="submit" class="btn btn-success search">FILTER RESULTS</button>
+        <input v-model="form.keyword" type="text" class="search"  placeholder="Job Title, Keyword.." title="Type in a category">
+        <button type="submit" class="btn btn-success search" @click="filterVacancy">FILTER RESULTS</button>
         </div>
       </div>
 
@@ -15,13 +15,26 @@
           <button type="submit" class="btn btn-success" @click="onEdit()">ADD NEW VACANCY</button>
         </h3><br/>
 
-        <div v-for="item in rows" v-bind:key="item.id">
+        <div v-if="filter">
+        <div v-for="item in filter_rows" v-bind:key="item.id">
+          <h5>{{ item.title}}</h5>
+          <p>{{ item.location}} &nbsp;&nbsp; <span>{{ item.salary}}</span></p>
+          <p>{{ item.description}}</p>
+          <p><button type="submit" class="btn btn-info" @click="onEdit()">UPDATE VACANCY</button> &nbsp;&nbsp; <span><button type="submit" class="btn btn-danger" @click="deleteVacancy(item.id)">DELETE</button></span></p><br/>
+        </div>
+          <pagination :data="laravelData" @pagination-change-page="filterVacancy"></pagination>
+        </div>
+
+        <div v-else>
+          <div v-for="item in rows" v-bind:key="item.id">
           <h5>{{ item.title}}</h5>
           <p>{{ item.location}} &nbsp;&nbsp; <span>{{ item.salary}}</span></p>
           <p>{{ item.description}}</p>
           <p><button type="submit" class="btn btn-info">UPDATE VACANCY</button> &nbsp;&nbsp; <span><button type="submit" class="btn btn-danger" @click="deleteVacancy(item.id)">DELETE</button></span></p><br/>
+         </div>
+          <pagination :data="laravelData" @pagination-change-page="makeCall"></pagination>
         </div>
-        <pagination :data="laravelData" @pagination-change-page="makeCall"></pagination>
+
       </div>
     </div>
 
@@ -84,13 +97,16 @@ export default {
   },
   data: () => ({
     rows: [],
+    filter_rows: [],
     laravelData: {},
+    filter: false,
     form: {
       id: null,
       title: '',
       location: '',
       salary: '',
-      description: ''
+      description: '',
+      keyword: ''
     },
     modalShow: false,
     edit: false
@@ -103,8 +119,31 @@ export default {
       this.edit = true;
       this.modalShow = !this.modalShow
     },
-    filter(){
-      alert('submitted');
+    async filterVacancy(page){
+      this.filter = true;
+      if (typeof page === 'undefined') {
+        page = 1;
+      }
+      const config = {
+        method: 'get',
+        url: this.$endpoint+'/api/filter_vacancy?keyword=' + this.form.keyword + '&page =' + page
+      }
+      let res = await axios(config)
+      this.laravelData = res.data;
+      let chunked = [JSON.parse(JSON.stringify(res.data.data, null, 2))];
+      for(let i = 0; i < chunked.length; i++) {
+        let array = JSON.parse(JSON.stringify(chunked[i]));
+        for(let j = 0; j < array.length; j++) {
+          this.filter_rows.push({
+            id: array[j].id,
+            title:  array[j].title,
+            description:  array[j].description,
+            location:  array[j].location,
+            salary:  array[j].salary
+          })
+        }
+      }
+     //location.reload();
     },
     async makeCall(page) {
       if (typeof page === 'undefined') {
