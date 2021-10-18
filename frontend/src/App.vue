@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="topnav">
+      <p class="active">Vacancies</p>
+    </div>
+    <HelloWorld/>
   </div>
 </template>
 
@@ -23,6 +25,20 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+
+.topnav {
+  background-color: steelblue;
+  overflow: hidden;
+}
+
+.topnav p {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 34px;
+}
+
 </style>

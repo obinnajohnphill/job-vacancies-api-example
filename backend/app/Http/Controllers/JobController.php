@@ -15,7 +15,7 @@ class JobController extends Controller
      */
     public function listVacancies(){
         try {
-            $response = Job::paginate(10);
+            $response = Job::orderBy('id', 'desc')->paginate(10);
         } catch (QueryException $exception) {
             $response = $exception->errorInfo;
         }
@@ -87,6 +87,7 @@ class JobController extends Controller
         return Job::where('title','like','%'.$request->input('title').'%')
                    ->where('location','like','%'.$request->input('location').'%')
                    ->where('salary','like','%'.$request->input('salary').'%')
+                   ->orderBy('id', 'desc')
                    ->paginate(10);
     }
 }
